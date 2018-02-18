@@ -1,0 +1,56 @@
+class TreeNode:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+def common_ancestor(root, p, q):
+  if not covers(root, p) or not covers(root, q):
+    return None
+  return common_ancestor_helper(root, p, q)
+  
+def common_ancestor_helper(root, p, q):
+  if root.val is p.val or root.val is q.val:
+    return root
+  p_on_left = covers(root.left, p)
+  q_on_left = covers(root.left, q)
+  if p_on_left is not q_on_left:
+    return root
+  elif p_on_left:
+    return common_ancestor_helper(root.left, p, q)
+  else:
+    return common_ancestor_helper(root.right, p, q)
+    
+def covers(root, node):
+  if root is None:
+    return False
+  if root.val is node.val:
+    return True
+  return covers(root.left, node) or covers(root.right, node)
+  
+a = TreeNode('a')
+b = TreeNode('b')
+c = TreeNode('c')
+d = TreeNode('d')
+e = TreeNode('e')
+f = TreeNode('f')
+g = TreeNode('g')
+h = TreeNode('h')
+i = TreeNode('i')
+j = TreeNode('j')
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+e.left = g
+c.left = f
+f.right = j
+e.right = h
+g.left = i
+
+
+res = common_ancestor(a, j, f)
+if res is not None:
+  print(res.val)
+else:
+  print(res)
