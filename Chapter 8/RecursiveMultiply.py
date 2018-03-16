@@ -9,7 +9,7 @@ def product_helper(smaller, bigger):
     side2 = 0
     if smaller % 2 == 1:
         side2 = bigger
-    side1 = product_helper(smaller//2, bigger)
+    side1 = product_helper(smaller >> 1, bigger)
     side2 += side1
     print(smaller, bigger, side1, side2)
     return side1 + side2
